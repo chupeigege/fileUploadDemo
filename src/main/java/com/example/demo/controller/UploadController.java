@@ -147,6 +147,26 @@ public class UploadController {
         return R.error("上传失败");
     }
 
+    /**
+     * http://localhost/deleteFile?filePath=group1/M00/00/00/wKgIZVzZaRiAZemtAARpYjHP9j4930.jpg
+     * @param filePath  group1/M00/00/00/wKgIZVzZaRiAZemtAARpYjHP9j4930.jpg
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/deleteFile")
+    public R delFile(String filePath , HttpServletRequest request ,HttpServletResponse response)  {
+
+        try {
+            dfsClient.delFile(filePath);
+        } catch(Exception e) {
+            // 文件不存在报异常 ： com.github.tobato.fastdfs.exception.FdfsServerException: 错误码：2，错误信息：找不到节点或文件
+            // e.printStackTrace();
+        }
+
+        return R.ok();
+    }
+
     private boolean validateFileType(String suffix) {
         String typeStr = "jpg|jpeg|png|gif|bmp";
         String[] types = typeStr.split("\\|");
